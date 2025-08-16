@@ -81,7 +81,7 @@ document.addEventListener('mouseup', function () {
 let current = -1;
 
 function highlightQuestion(idx) {
-  questions.forEach((q) => (q.style.background = ''));
+  Array.from(questions).forEach((q) => (q.style.background = ''));
   if (questions[idx]) {
     questions[idx].scrollIntoView({ behavior: 'smooth', block: 'center' });
     questions[idx].style.background = '#ffeeba';
