@@ -5,24 +5,32 @@ let questions = document.querySelectorAll('.formulation');
 const reviewBtn = document.createElement('button');
 reviewBtn.textContent = 'Start Review';
 reviewBtn.style.position = 'fixed';
-reviewBtn.style.top = '20px';
-reviewBtn.style.right = '20px';
+reviewBtn.style.top = 'calc(100% - 56px)';
+reviewBtn.style.left = '50%';
+reviewBtn.style.transform = 'translateX(-50%) translateY(-50%)';
 reviewBtn.style.zIndex = '9999';
-reviewBtn.style.padding = '10px 20px';
-reviewBtn.style.fontSize = '16px';
+reviewBtn.style.padding = '16px';
+reviewBtn.style.backgroundColor = '#E90172';
+reviewBtn.style.boxShadow = '0 .125rem .25rem rgba(0, 0, 0, .075)';
+reviewBtn.style.color = '#fff';
+reviewBtn.style.fontSize = '1rem';
+reviewBtn.style.fontWeight = 'bold';
+reviewBtn.style.lineHeight = '1.5';
+reviewBtn.style.border = 'none';
+reviewBtn.style.borderRadius = '28px';
+reviewBtn.style.cursor = 'pointer';
+
 document.body.appendChild(reviewBtn);
 
 // Make reviewBtn draggable
 let isDragging = false;
 let dragStarted = false;
-let offsetX, offsetY;
 let dragJustEnded = false;
 
 reviewBtn.addEventListener('mousedown', function (e) {
   isDragging = true;
   dragStarted = false;
-  offsetX = e.clientX - reviewBtn.getBoundingClientRect().left;
-  offsetY = e.clientY - reviewBtn.getBoundingClientRect().top;
+
   dragJustEnded = false;
 });
 
@@ -37,16 +45,13 @@ document.addEventListener('mousemove', function (e) {
       reviewBtn.style.cursor = 'grabbing';
     }
     if (dragStarted) {
-      // Clamp position so button stays fully visible
-      const btnWidth = reviewBtn.offsetWidth;
-      const btnHeight = reviewBtn.offsetHeight;
       const viewportWidth = window.innerWidth;
       const viewportHeight = window.innerHeight;
-      let newLeft = e.clientX - offsetX;
-      let newTop = e.clientY - offsetY;
+      let newLeft = e.clientX;
+      let newTop = e.clientY;
       // Clamp left and top
-      newLeft = Math.max(0, Math.min(newLeft, viewportWidth - btnWidth));
-      newTop = Math.max(0, Math.min(newTop, viewportHeight - btnHeight));
+      newLeft = Math.max(0, Math.min(newLeft, viewportWidth));
+      newTop = Math.max(0, Math.min(newTop, viewportHeight));
       reviewBtn.style.left = newLeft + 'px';
       reviewBtn.style.top = newTop + 'px';
       reviewBtn.style.right = '';
@@ -64,8 +69,6 @@ document.addEventListener('mouseup', function () {
     dragStarted = false;
   }
 });
-
-reviewBtn.style.cursor = 'pointer';
 
 let current = -1;
 
@@ -105,18 +108,17 @@ reviewBtn.addEventListener('click', function (e) {
   if (reviewBtn.textContent === 'Start Review') {
     prepare();
     reviewBtn.textContent = getNextQuestionLabel();
-
-  }  else if (reviewBtn.textContent === 'Finish Review') {
+  } else if (reviewBtn.textContent === 'Finish Review') {
     questions[current].style.background = '';
     current = -1;
     reviewBtn.textContent = 'Start Review';
 
+    questions[0].scrollIntoView({ behavior: 'smooth', block: 'center' });
   } else if (reviewBtn.textContent.includes('Next Question')) {
     if (current !== -1) questions[current].style.background = ''; // Clear previous question highlight
     current++;
     highlightQuestion(current);
     reviewBtn.textContent = `Show Answer ${current + 1}/${questions.length}`;
-
   } else if (reviewBtn.textContent.includes('Show Answer')) {
     if (answers[current]) answers[current].style.display = '';
     if (current + 1 < questions.length) {
@@ -124,5 +126,5 @@ reviewBtn.addEventListener('click', function (e) {
     } else {
       reviewBtn.textContent = 'Finish Review';
     }
-  } 
+  }
 });
