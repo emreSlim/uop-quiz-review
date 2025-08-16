@@ -169,3 +169,12 @@ reviewBtn.addEventListener('click', function (e) {
     showAnswer();
   }
 });
+
+// Keyboard shortcuts
+window.addEventListener('keydown', function(e) {
+  // 'n' triggers the review button (next)
+  if (e.key.toLowerCase() === 'n' && !e.ctrlKey && !e.altKey && !e.metaKey) {
+    reviewBtn.click();
+    e.preventDefault();
+  }
+});
