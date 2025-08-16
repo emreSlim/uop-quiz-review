@@ -1,6 +1,6 @@
 let answers = document.getElementsByClassName('outcome');
 
-let questions = document.querySelectorAll('.formulation');
+let questions = document.getElementsByClassName('formulation');
 
 const reviewBtn = document.createElement('button');
 reviewBtn.textContent = 'Start Review';
@@ -18,7 +18,7 @@ reviewBtn.style.cursor = 'pointer';
 reviewBtn.style.whiteSpace = 'nowrap';
 
 function resetButtonLocation() {
-  reviewBtn.style.top = 'calc(100% - 56px)';
+  reviewBtn.style.top = '93px';
   reviewBtn.style.left = '50%';
   reviewBtn.style.transform = 'translateX(-50%) translateY(-50%)';
   reviewBtn.style.zIndex = '9999';
@@ -104,6 +104,9 @@ function prepare() {
   Array.from(selections).forEach((sel) => sel.removeAttribute('checked'));
 
   Array.from(answers).forEach((ans) => (ans.style.display = 'none'));
+
+  const summary = document.getElementsByClassName('quizreviewsummary');
+  Array.from(summary).forEach((sum) => (sum.style.visibility = 'hidden'));
 }
 
 reviewBtn.addEventListener('click', function (e) {
