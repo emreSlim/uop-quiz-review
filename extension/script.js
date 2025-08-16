@@ -5,10 +5,6 @@ let questions = document.querySelectorAll('.formulation');
 const reviewBtn = document.createElement('button');
 reviewBtn.textContent = 'Start Review';
 reviewBtn.style.position = 'fixed';
-reviewBtn.style.top = 'calc(100% - 56px)';
-reviewBtn.style.left = '50%';
-reviewBtn.style.transform = 'translateX(-50%) translateY(-50%)';
-reviewBtn.style.zIndex = '9999';
 reviewBtn.style.padding = '16px';
 reviewBtn.style.backgroundColor = '#E90172';
 reviewBtn.style.boxShadow = '0 .125rem .25rem rgba(0, 0, 0, .075)';
@@ -19,6 +15,18 @@ reviewBtn.style.lineHeight = '1.5';
 reviewBtn.style.border = 'none';
 reviewBtn.style.borderRadius = '28px';
 reviewBtn.style.cursor = 'pointer';
+reviewBtn.style.whiteSpace = 'nowrap';
+
+function resetButtonLocation() {
+  reviewBtn.style.top = 'calc(100% - 56px)';
+  reviewBtn.style.left = '50%';
+  reviewBtn.style.transform = 'translateX(-50%) translateY(-50%)';
+  reviewBtn.style.zIndex = '9999';
+}
+resetButtonLocation();
+
+window.addEventListener('resize', resetButtonLocation);
+
 
 document.body.appendChild(reviewBtn);
 
