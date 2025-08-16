@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "University Of the People Quiz Review Extension",
   "version": "1.0",
-  "description": "A browser extension version of the University Of the People Quiz Review script.",
+  "description": "A browser extension to review Quiz of the University Of the People ",
   "permissions": [],
   "content_scripts": [
     {
