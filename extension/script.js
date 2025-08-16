@@ -92,8 +92,8 @@ function getNextQuestionLabel() {
 }
 
 function startReview() {
-  const checks = document.getElementsByClassName(
-    'icon fa fa-check text-success fa-fw '
+  const checks = document.querySelectorAll(
+    'i[title="Incorrect"], i[title="Correct"]'
   );
   Array.from(checks).forEach((check) => (check.style.display = 'none'));
 
