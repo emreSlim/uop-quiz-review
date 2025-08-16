@@ -129,13 +129,23 @@ function startReview() {
   Array.from(checks).forEach((check) => (check.style.display = 'none'));
 
   const selections = document.querySelectorAll(
-    'input[type=radio][checked=checked]'
+    'input[type=radio]'
   );
-  Array.from(selections).forEach((sel) => sel.removeAttribute('checked'));
+  Array.from(selections).forEach((sel) => sel.style.display = 'none');
 
   Array.from(answers).forEach((ans) => (ans.style.display = 'none'));
 
   Array.from(summaryTable).forEach((sum) => (sum.style.visibility = 'hidden'));
+
+  const grades = document.querySelectorAll('div.info > div.grade');
+
+  Array.from(grades).forEach((grade) => (grade.style.display = 'none'));
+
+  const states = document.querySelectorAll('div.info > div.state');
+  Array.from(states).forEach((state) => (state.style.display = 'none'));
+
+  const drawerButtons = document.querySelectorAll('button[data-action="closedrawer"]');
+  Array.from(drawerButtons).forEach((btn) => (btn.click()));
 
   prependReviewingToSelfQuizHeaders();
 
