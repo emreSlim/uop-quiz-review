@@ -1,6 +1,6 @@
-let answers = document.getElementsByClassName('outcome');
-
-let questions = document.getElementsByClassName('formulation');
+const summaryTable = document.getElementsByClassName('quizreviewsummary');
+const answers = document.getElementsByClassName('outcome');
+const questions = document.getElementsByClassName('formulation');
 
 const reviewBtn = document.createElement('button');
 reviewBtn.textContent = 'Start Review';
@@ -105,8 +105,7 @@ function prepare() {
 
   Array.from(answers).forEach((ans) => (ans.style.display = 'none'));
 
-  const summary = document.getElementsByClassName('quizreviewsummary');
-  Array.from(summary).forEach((sum) => (sum.style.visibility = 'hidden'));
+  Array.from(summaryTable).forEach((sum) => (sum.style.visibility = 'hidden'));
 }
 
 reviewBtn.addEventListener('click', function (e) {
@@ -123,8 +122,8 @@ reviewBtn.addEventListener('click', function (e) {
     questions[current].style.background = '';
     current = -1;
     reviewBtn.textContent = 'Start Review';
-
     questions[0].scrollIntoView({ behavior: 'smooth', block: 'center' });
+    Array.from(summaryTable).forEach((sum) => (sum.style.visibility = 'visible'));
   } else if (reviewBtn.textContent.includes('Next Question')) {
     if (current !== -1) questions[current].style.background = ''; // Clear previous question highlight
     current++;
