@@ -5,7 +5,7 @@ const questions = document.getElementsByClassName('formulation');
 const reviewBtn = document.createElement('button');
 reviewBtn.textContent = 'Start Review';
 reviewBtn.style.position = 'fixed';
-reviewBtn.style.padding = '16px';
+reviewBtn.style.padding = '8px 16px';
 reviewBtn.style.backgroundColor = '#E90172';
 reviewBtn.style.boxShadow = '0 .125rem .25rem rgba(0, 0, 0, .075)';
 reviewBtn.style.color = '#fff';
@@ -17,15 +17,46 @@ reviewBtn.style.borderRadius = '28px';
 reviewBtn.style.cursor = 'pointer';
 reviewBtn.style.whiteSpace = 'nowrap';
 
-function resetButtonLocation() {
+function setDefaultButtonPosition() {
   reviewBtn.style.top = '93px';
   reviewBtn.style.left = '50%';
   reviewBtn.style.transform = 'translateX(-50%) translateY(-50%)';
   reviewBtn.style.zIndex = '9999';
 }
-resetButtonLocation();
 
-window.addEventListener('resize', resetButtonLocation);
+setDefaultButtonPosition();
+
+function cacheButtonPosition() {
+  localStorage.setItem(
+    'reviewBtnPosition',
+    JSON.stringify({ left: reviewBtn.style.left, top: reviewBtn.style.top })
+  );
+}
+
+function loadButtonPosition() {
+  const pos = localStorage.getItem('reviewBtnPosition');
+  if (pos) {
+    try {
+      const { left, top } = JSON.parse(pos);
+      reviewBtn.style.left = left;
+      reviewBtn.style.top = top;
+    } catch {
+      setDefaultButtonPosition();
+      resetButtonPosition();
+    }
+  } else {
+    setDefaultButtonPosition();
+  }
+}
+
+loadButtonPosition();
+
+function resetButtonPosition() {
+  setDefaultButtonPosition();
+  cacheButtonPosition();
+}
+
+window.addEventListener('resize', resetButtonPosition);
 
 document.body.appendChild(reviewBtn);
 
@@ -61,7 +92,6 @@ document.addEventListener('mousemove', function (e) {
       newTop = Math.max(0, Math.min(newTop, viewportHeight));
       reviewBtn.style.left = newLeft + 'px';
       reviewBtn.style.top = newTop + 'px';
-      reviewBtn.style.right = '';
     }
   }
 });
@@ -74,6 +104,7 @@ document.addEventListener('mouseup', function () {
       dragJustEnded = true;
     }
     dragStarted = false;
+    cacheButtonPosition();
   }
 });
 
@@ -167,14 +198,5 @@ reviewBtn.addEventListener('click', function (e) {
     nextQuestion();
   } else if (reviewBtn.textContent.includes('Show Answer')) {
     showAnswer();
-  }
-});
-
-// Keyboard shortcuts
-window.addEventListener('keydown', function(e) {
-  // 'n' triggers the review button (next)
-  if (e.key.toLowerCase() === 'n' && !e.ctrlKey && !e.altKey && !e.metaKey) {
-    reviewBtn.click();
-    e.preventDefault();
   }
 });
