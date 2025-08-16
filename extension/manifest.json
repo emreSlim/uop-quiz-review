@@ -1,0 +1,17 @@
+{
+  "manifest_version": 3,
+  "name": "University Of the People Quiz Review Extension",
+  "version": "1.0",
+  "description": "A browser extension version of the University Of the People Quiz Review script.",
+  "permissions": [],
+  "content_scripts": [
+    {
+      "matches": ["*://my.uopeople.edu/mod/quiz/review.php*"],
+      "js": ["script.js"]
+    }
+  ],
+  "icons": {
+    "48": "icon48.png",
+    "128": "icon128.png"
+  }
+}
